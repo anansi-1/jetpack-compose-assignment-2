@@ -23,13 +23,16 @@ fun ListScreen(
     onTodoClick: (Int) -> Unit,
     viewModel: ListViewModel
 ) {
+    val isLoading = viewModel.isLoading.collectAsState().value
+    val error = viewModel.errorMessage.collectAsState().value
+
     Column(modifier = Modifier.fillMaxSize()) {
 
         TopAppBar(
             title = { Text("TODO List") },
             actions = {
                 Button(
-                    onClick = {  },
+                    onClick = { viewModel.refresh() },
                     shape = RoundedCornerShape(50),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF37160))
                 ) {
@@ -38,35 +41,52 @@ fun ListScreen(
             }
         )
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color(0xFFF5F5F5)),
-            contentPadding = PaddingValues(vertical = 8.dp)
-        ) {
-            items(todos) { todo ->
-                Card(
+        if (isLoading) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator(color = Color(0xFF5D4493))
+            }
+        } else {
+            // Show error message if exists (but don't block list)
+            if (error != null) {
+                Text(
+                    text = error,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp, vertical = 4.dp)
-                        .clickable { onTodoClick(todo.id) },
-                    shape = RoundedCornerShape(16.dp),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White)
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = todo.title,
-                            fontWeight = FontWeight.SemiBold,
-                            style = MaterialTheme.typography.titleMedium,
-                            color = Color.Black
-                        )
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(
-                            text = "Status: ${if (todo.completed) "Complete" else "Incomplete"}",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = if (todo.completed) Color(0xFF388E3C) else Color.Gray
-                        )
+                        .padding(16.dp)
+                        .fillMaxWidth(),
+                    color = Color.Red
+                )
+            }
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color(0xFFF5F5F5)),
+                contentPadding = PaddingValues(vertical = 8.dp)
+            ) {
+                items(todos) { todo ->
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp, vertical = 4.dp)
+                            .clickable { onTodoClick(todo.id) },
+                        shape = RoundedCornerShape(16.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color.White)
+                    ) {
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            Text(
+                                text = todo.title,
+                                fontWeight = FontWeight.SemiBold,
+                                style = MaterialTheme.typography.titleMedium,
+                                color = Color.Black
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = "Status: ${if (todo.completed) "Complete" else "Incomplete"}",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = if (todo.completed) Color(0xFF388E3C) else Color.Gray
+                            )
+                        }
                     }
                 }
             }
