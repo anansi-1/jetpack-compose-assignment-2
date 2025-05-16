@@ -22,65 +22,67 @@ fun DetailScreen(
         topBar = {
             DetailTopBar(onBackClick = onBack)
         },
-        containerColor = Color(0xFFF5F5F5)
+        containerColor = Color(0xFFF0F4F8)
     ) { padding ->
         todo?.let {
             Column(
                 modifier = Modifier
                     .padding(padding)
-                    .padding(16.dp)
+                    .padding(24.dp)
                     .fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                // Title and status
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
                         text = it.title,
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        color = Color(0xFF344E72)
                     )
                     Surface(
-                        color = if (it.completed) Color(0xFFE0F2F1) else Color(0xFFFFEBEE),
-                        shape = RoundedCornerShape(12.dp)
+                        color = if (it.completed) Color(0xFFE0F2F1) else Color(0xFFFDECEA),
+                        shape = RoundedCornerShape(14.dp)
                     ) {
                         Text(
                             text = if (it.completed) "✓ Completed" else "✗ Incomplete",
-                            color = if (it.completed) Color(0xFF388E3C) else Color(0xFFD32F2F),
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-                            style = MaterialTheme.typography.bodySmall
+                            color = if (it.completed) Color(0xFF3B8D99) else Color(0xFFD55C5C),
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.SemiBold
                         )
                     }
                 }
 
-                Divider()
+                Divider(color = Color(0xFF344E72), thickness = 1.dp)
 
-                // Description
-                Text("Description", fontWeight = FontWeight.SemiBold)
+                Text("Description", fontWeight = FontWeight.SemiBold, style = MaterialTheme.typography.titleMedium, color = Color(0xFF344E72))
                 Text(
                     text = "This is a detailed description for the todo item \"${it.title}\". It provides additional context and information about what needs to be done.",
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = Color(0xFF2E3A59)
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(20.dp))
 
-                // Details
-                Text("Details", fontWeight = FontWeight.SemiBold)
-                Text("ID: ${it.id}")
-                Text("User ID: ${it.userId}")
+                Text("Details", fontWeight = FontWeight.SemiBold, style = MaterialTheme.typography.titleMedium, color = Color(0xFF344E72))
+                Text("ID: ${it.id}", style = MaterialTheme.typography.bodyLarge, color = Color(0xFF2E3A59))
+                Text("User ID: ${it.userId}", style = MaterialTheme.typography.bodyLarge, color = Color(0xFF2E3A59))
                 Row {
-                    Text("Status:")
+                    Text("Status:", style = MaterialTheme.typography.bodyLarge, color = Color(0xFF2E3A59))
                     Text(
                         text = " ${if (it.completed) "Completed" else "Incomplete"}",
-                        color = if (it.completed) Color(0xFF388E3C) else Color(0xFFD32F2F)
+                        color = if (it.completed) Color(0xFF3B8D99) else Color(0xFFD55C5C),
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.SemiBold
                     )
                 }
             }
         } ?: Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator(color = Color(0xFF5D4493))
+            CircularProgressIndicator(color = Color(0xFF344E72))
         }
     }
 }
@@ -100,7 +102,7 @@ fun DetailTopBar(onBackClick: () -> Unit) {
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color(0xFF5D4493),
+            containerColor = Color(0xFF344E72),
             titleContentColor = Color.White,
             navigationIconContentColor = Color.White
         )

@@ -30,11 +30,15 @@ fun ListScreen(
 
         TopAppBar(
             title = { Text("TODO List") },
+            colors = TopAppBarDefaults.smallTopAppBarColors(
+                containerColor = Color(0xFF344E72),
+                titleContentColor = Color.White
+            ),
             actions = {
                 Button(
                     onClick = { viewModel.refresh() },
                     shape = RoundedCornerShape(50),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF37160))
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF627D98))
                 ) {
                     Text("Refresh", color = Color.White)
                 }
@@ -43,48 +47,49 @@ fun ListScreen(
 
         if (isLoading) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator(color = Color(0xFF5D4493))
+                CircularProgressIndicator(color = Color(0xFF344E72))
             }
         } else {
-            // Show error message if exists (but don't block list)
             if (error != null) {
                 Text(
                     text = error,
                     modifier = Modifier
                         .padding(16.dp)
                         .fillMaxWidth(),
-                    color = Color.Red
+                    color = Color(0xFFD55C5C),
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Medium
                 )
             }
 
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color(0xFFF5F5F5)),
+                    .background(Color(0xFFF0F4F8)),
                 contentPadding = PaddingValues(vertical = 8.dp)
             ) {
                 items(todos) { todo ->
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 8.dp, vertical = 4.dp)
+                            .padding(horizontal = 12.dp, vertical = 6.dp)
                             .clickable { onTodoClick(todo.id) },
                         shape = RoundedCornerShape(16.dp),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
                         colors = CardDefaults.cardColors(containerColor = Color.White)
                     ) {
-                        Column(modifier = Modifier.padding(16.dp)) {
+                        Column(modifier = Modifier.padding(20.dp)) {
                             Text(
                                 text = todo.title,
-                                fontWeight = FontWeight.SemiBold,
+                                fontWeight = FontWeight.Bold,
                                 style = MaterialTheme.typography.titleMedium,
-                                color = Color.Black
+                                color = Color(0xFF2E3A59)
                             )
-                            Spacer(modifier = Modifier.height(4.dp))
+                            Spacer(modifier = Modifier.height(6.dp))
                             Text(
                                 text = "Status: ${if (todo.completed) "Complete" else "Incomplete"}",
                                 style = MaterialTheme.typography.bodySmall,
-                                color = if (todo.completed) Color(0xFF388E3C) else Color.Gray
+                                color = if (todo.completed) Color(0xFF3B8D99) else Color.Gray
                             )
                         }
                     }
