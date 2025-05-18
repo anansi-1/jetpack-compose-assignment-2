@@ -22,13 +22,11 @@ class TodoRepository(
     suspend fun fetchTodos(forceRefresh: Boolean = false) {
         _isLoading.value = true
         try {
-            // Step 1: Load cached data first
             val localData = dao.getAllTodos()
             if (localData.isNotEmpty()) {
                 _cachedTodos.value = localData
             }
 
-            // Step 2: If forceRefresh or no cached data, try fetching from network
             if (forceRefresh || localData.isEmpty()) {
                 try {
                     val remoteData = api.getTodos()
@@ -36,16 +34,13 @@ class TodoRepository(
                     _cachedTodos.value = remoteData
                     _errorMessage.value = null
                 } catch (networkException: Exception) {
-                    // Network failed: show offline message but keep cached data
                     if (localData.isEmpty()) {
-                        // No data at all to show
                         _errorMessage.value = "No data available and you're offline."
                     } else {
                         _errorMessage.value = "You're offline. Showing cached data."
                     }
                 }
             } else {
-                // No refresh requested and cached data shown
                 _errorMessage.value = null
             }
 
