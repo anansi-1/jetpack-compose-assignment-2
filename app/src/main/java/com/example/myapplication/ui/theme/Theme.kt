@@ -47,19 +47,16 @@ fun MyApplicationTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
 
     val systemUiController = rememberSystemUiController()
-    val useDarkIcons = !darkTheme
-    val statusBarColor = Color(0xFF344E72) // Match your TopAppBar color
 
     SideEffect {
         systemUiController.setStatusBarColor(
-            color = statusBarColor,
-            darkIcons = useDarkIcons
+            color = Color(0xFFFFFCFC),
+            darkIcons = true
         )
     }
 
