@@ -12,7 +12,6 @@ class ListViewModel(private val repository: TodoRepository) : ViewModel() {
     val errorMessage = repository.errorMessage
 
     init {
-        // Load cache first, then try network update
         refresh()
     }
 
