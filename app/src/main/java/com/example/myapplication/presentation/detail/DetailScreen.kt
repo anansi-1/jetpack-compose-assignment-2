@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.detail
+package com.example.myapplication.presentation.detail
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -48,7 +48,7 @@ fun DetailScreen(
                         shape = RoundedCornerShape(14.dp)
                     ) {
                         Text(
-                            text = if (it.completed) "✓ Completed" else "✗ Incomplete",
+                            text = if (it.completed) "Completed" else "Incomplete",
                             color = if (it.completed) Color(0xFF3B8D99) else Color(0xFFD55C5C),
                             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                             style = MaterialTheme.typography.bodyMedium,
@@ -59,14 +59,13 @@ fun DetailScreen(
 
                 Divider(color = Color(0xFF344E72), thickness = 1.dp)
 
-                Text("Description", fontWeight = FontWeight.SemiBold, style = MaterialTheme.typography.titleMedium, color = Color(0xFF344E72))
+                Text("Title", fontWeight = FontWeight.SemiBold, style = MaterialTheme.typography.titleMedium, color = Color(0xFF344E72))
                 Text(
-                    text = "This is a detailed description for the todo item \"${it.title}\". It provides additional context and information about what needs to be done.",
+                    text = "\"${it.title}\"",
                     style = MaterialTheme.typography.bodyLarge,
                     color = Color(0xFF2E3A59)
                 )
 
-                Spacer(modifier = Modifier.height(20.dp))
 
                 Text("Details", fontWeight = FontWeight.SemiBold, style = MaterialTheme.typography.titleMedium, color = Color(0xFF344E72))
                 Text("ID: ${it.id}", style = MaterialTheme.typography.bodyLarge, color = Color(0xFF2E3A59))

@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.navigation
+package com.example.myapplication.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -7,17 +7,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.repository.TodoRepository
-import com.example.myapplication.ui.detail.DetailScreen
-import com.example.myapplication.ui.detail.DetailViewModel
-import com.example.myapplication.ui.list.ListScreen
-import com.example.myapplication.ui.list.ListViewModel
-import androidx.compose.runtime.collectAsState
+import com.example.myapplication.presentation.detail.DetailScreen
+import com.example.myapplication.presentation.detail.DetailViewModel
+import com.example.myapplication.presentation.detail.list.ListScreen
+import com.example.myapplication.presentation.detail.list.ListViewModel
 
 @Composable
 fun NavGraph(startDestination: String = "list", repo: TodoRepository) {
     val navController = rememberNavController()
     val listViewModel = remember { ListViewModel(repo) }
-    val detailViewModel = remember { DetailViewModel(repo) }
+
 
     NavHost(navController = navController, startDestination = startDestination) {
         composable("list") {
@@ -29,17 +28,16 @@ fun NavGraph(startDestination: String = "list", repo: TodoRepository) {
                 onTodoClick = { navController.navigate("detail/$it") }
             )
         }
-
         composable("detail/{todoId}") { backStackEntry ->
             val todoId = backStackEntry.arguments?.getString("todoId")?.toIntOrNull() ?: return@composable
-            detailViewModel.loadTodo(todoId) // Load the todo
-
+            val detailViewModel = remember(todoId) { DetailViewModel(repo, todoId) }
             val todoState = detailViewModel.selectedTodo.collectAsState()
 
             DetailScreen(todo = todoState.value) {
                 navController.popBackStack()
             }
         }
+
 
     }
 }

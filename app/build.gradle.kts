@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.implementation
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -97,5 +99,7 @@ dependencies {
     kapt("androidx.room:room-compiler:2.6.1")
 // Optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:2.6.1")
+
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.36.0")
 
 }

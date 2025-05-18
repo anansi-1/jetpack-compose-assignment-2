@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.list
+package com.example.myapplication.presentation.detail.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
