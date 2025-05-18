@@ -1,4 +1,4 @@
-package com.example.myapplication.presentation.detail.list
+package com.example.myapplication.presentation.list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

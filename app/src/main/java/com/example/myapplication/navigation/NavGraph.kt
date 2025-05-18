@@ -9,8 +9,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.repository.TodoRepository
 import com.example.myapplication.presentation.detail.DetailScreen
 import com.example.myapplication.presentation.detail.DetailViewModel
-import com.example.myapplication.presentation.detail.list.ListScreen
-import com.example.myapplication.presentation.detail.list.ListViewModel
+import com.example.myapplication.presentation.list.ListScreen
+import com.example.myapplication.presentation.list.ListViewModel
 
 @Composable
 fun NavGraph(startDestination: String = "list", repo: TodoRepository) {
